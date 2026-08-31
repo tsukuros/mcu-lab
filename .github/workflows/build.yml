@@ -1,0 +1,78 @@
+name: build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+# A new push to the same PR cancels the run it supersedes.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # Every directory holding a platformio.ini is a project. Adding a module
+  # needs no change here.
+  discover:
+    runs-on: ubuntu-latest
+    outputs:
+      projects: ${{ steps.find.outputs.projects }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: find
+        run: |
+          projects=$(find . -name platformio.ini -not -path './.git/*' \
+            -exec dirname {} \; | sed 's|^\./||' | sort | jq -R -s -c 'split("\n")[:-1]')
+          echo "projects=$projects" >> "$GITHUB_OUTPUT"
+          echo "Discovered: $projects"
+
+  test:
+    name: host tests
+    needs: discover
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        project: ${{ fromJSON(needs.discover.outputs.projects) }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/cache@v4
+        with:
+          path: ~/.platformio
+          key: pio-${{ runner.os }}-${{ hashFiles('**/platformio.ini') }}
+      - run: pip install --upgrade platformio
+      # No hardware dependencies, so these run on the runner in seconds.
+      - name: pio test -e native
+        working-directory: ${{ matrix.project }}
+        run: |
+          if grep -q '^\[env:native\]' platformio.ini; then
+            pio test -e native
+          else
+            echo "no native env in this project; skipping"
+          fi
+
+  firmware:
+    name: build firmware
+    needs: [discover, test]
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        project: ${{ fromJSON(needs.discover.outputs.projects) }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/cache@v4
+        with:
+          path: ~/.platformio
+          key: pio-${{ runner.os }}-${{ hashFiles('**/platformio.ini') }}
+      - run: pip install --upgrade platformio
+      - name: pio run
+        working-directory: ${{ matrix.project }}
+        run: pio run

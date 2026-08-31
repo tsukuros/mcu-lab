@@ -1,0 +1,22 @@
+# PlatformIO
+.pio/
+.vscode/
+
+# ESP-IDF: версіонуємо лише sdkconfig.defaults, решта генерується
+sdkconfig
+sdkconfig.*
+!sdkconfig.defaults
+build/
+
+*.bin
+*.elf
+*.map
+
+docs/html/
+
+# clangd: абсолютні шляхи цієї машини
+compile_commands.json
+.clangd
+.cache/
+
+.DS_Store
