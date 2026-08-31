@@ -1,0 +1,6 @@
+# Console on the native USB (USB Serial/JTAG) rather than UART0.
+CONFIG_ESP_CONSOLE_UART_DEFAULT=n
+CONFIG_ESP_CONSOLE_USB_SERIAL_JTAG=y
+
+# N16R8 board: 16 MB flash. Without this IDF assumes 2 MB and warns.
+CONFIG_ESPTOOLPY_FLASHSIZE_16MB=y

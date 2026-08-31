@@ -17,6 +17,12 @@ shared/       code used by more than one project
 Each directory under a topic is a **self-contained PlatformIO project**.
 Enter it, run `pio run`, done. No shared state between projects.
 
+### Projects
+
+| Project | What it does |
+|---|---|
+| [`analog/twilight-switch`](analog/twilight-switch/) | photoresistor → ADC → hysteresis → transistor switch → relay |
+
 ## Building
 
 ```bash
