@@ -1,0 +1,28 @@
+# Matches the style already in the repo: function braces on their own line,
+# control-statement braces attached, assignments aligned in blocks.
+Language: Cpp
+BasedOnStyle: LLVM
+
+IndentWidth: 2
+ColumnLimit: 80
+
+BreakBeforeBraces: Custom
+BraceWrapping:
+  AfterFunction: true
+
+AlignConsecutiveAssignments: true
+AlignConsecutiveMacros: true
+AlignConsecutiveDeclarations: true
+AllowShortFunctionsOnASingleLine: Empty
+AllowShortCaseLabelsOnASingleLine: true
+IndentCaseLabels: true
+ContinuationIndentWidth: 2
+PointerAlignment: Right
+
+# Header order can be load-bearing in embedded C (and the grouping here is
+# deliberate: framework headers, then ours). Never reorder it automatically.
+SortIncludes: false
+
+# When a call has to wrap, put one argument per line rather than packing
+# them -- log format strings stay readable that way.
+BinPackArguments: false

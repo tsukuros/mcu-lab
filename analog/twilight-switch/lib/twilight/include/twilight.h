@@ -6,17 +6,13 @@
 
 /* No hardware dependencies, which is why this runs under test on the host. */
 
-typedef enum {
-    TWILIGHT_DARK,
-    TWILIGHT_DEAD,
-    TWILIGHT_LIGHT
-} twilight_zone_t;
+typedef enum { TWILIGHT_DARK, TWILIGHT_DEAD, TWILIGHT_LIGHT } twilight_zone_t;
 
 typedef struct {
-    int      threshold_dark;
-    int      threshold_light;
-    bool     lamp_on;
-    uint32_t switches;
+  int      threshold_dark;
+  int      threshold_light;
+  bool     lamp_on;
+  uint32_t switches;
 } twilight_t;
 
 void twilight_init(twilight_t *t, int threshold_dark, int threshold_light);
