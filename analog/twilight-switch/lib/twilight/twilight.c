@@ -37,9 +37,9 @@ twilight_zone_t twilight_zone(const twilight_t *t, int raw)
 const char *twilight_zone_name(twilight_zone_t zone)
 {
   switch (zone) {
-    case TWILIGHT_DARK:  return "DARK";
+    case TWILIGHT_DARK: return "DARK";
     case TWILIGHT_LIGHT: return "LIGHT";
-    case TWILIGHT_DEAD:  return "DEAD ZONE";
+    case TWILIGHT_DEAD: return "DEAD ZONE";
   }
   /* C enums are not exhaustive, so the compiler demands this line. */
   return "?";

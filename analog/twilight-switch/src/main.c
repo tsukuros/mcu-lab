@@ -24,7 +24,8 @@ void app_main(void)
 
     relay_set(lamp);
 
-    ESP_LOGI(TAG, "adc=%4d (%.2f V)  %-10s  lamp=%-3s  switches=%lu",
+    ESP_LOGI(TAG,
+             "adc=%4d (%.2f V)  %-10s  lamp=%-3s  switches=%lu",
              raw,
              ldr_raw_to_volts(raw),
              twilight_zone_name(twilight_zone(&state, raw)),

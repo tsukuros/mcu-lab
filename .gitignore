@@ -1,8 +1,12 @@
 # PlatformIO
 .pio/
-.vscode/
+# Ignore every .vscode at any depth (PlatformIO generates per-project ones
+# full of absolute paths), but keep the repo-root settings.json, which
+# carries the format-on-save wiring for .clang-format.
+**/.vscode/*
+!/.vscode/settings.json
 
-# ESP-IDF: версіонуємо лише sdkconfig.defaults, решта генерується
+# ESP-IDF: version only sdkconfig.defaults; the rest is generated.
 sdkconfig
 sdkconfig.*
 !sdkconfig.defaults
@@ -14,7 +18,7 @@ build/
 
 docs/html/
 
-# clangd: абсолютні шляхи цієї машини
+# clangd: absolute paths for this machine only.
 compile_commands.json
 .clangd
 .cache/
