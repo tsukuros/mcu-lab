@@ -1,0 +1,7 @@
+{
+  "name": "blinker",
+  "version": "1.0.0",
+  "build": {
+    "flags": ["-Wunused-parameter"]
+  }
+}
